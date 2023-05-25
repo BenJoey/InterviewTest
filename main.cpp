@@ -8,10 +8,10 @@ int getScenicScore(const std::vector<std::vector<int>> &Matrix, int row, int col
 {
     int scenicScore = 0;
     int starterValue = isColumn ? column : row;
-    for (int k = starterValue + direction; k < Matrix[0].size() && k >= 0; k += direction)
+    for (int i = starterValue + direction; i < Matrix[0].size() && i >= 0; i += direction)
     {
         scenicScore++;
-        int compareValue = isColumn ? Matrix[row][k] : Matrix[k][column];
+        int compareValue = isColumn ? Matrix[row][i] : Matrix[i][column];
         if (compareValue >= Matrix[row][column])
             return scenicScore;
     }
@@ -26,9 +26,9 @@ bool isTreeVisible(const std::vector<std::vector<int>> &Matrix, int row, int col
     {
         return direction != -1 ? k < iterationCompareValue : k > iterationCompareValue;
     };
-    for (int k = starterValue; conditionFun(k); k += direction)
+    for (int i = starterValue; conditionFun(i); i += direction)
     {
-        int compareValue = isColumn ? Matrix[row][k] : Matrix[k][column];
+        int compareValue = isColumn ? Matrix[row][i] : Matrix[i][column];
         if (compareValue >= Matrix[row][column])
         {
             return false;
