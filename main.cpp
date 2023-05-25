@@ -2,6 +2,7 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <algorithm>
 
 int main(int argc, char **argv)
 {
@@ -18,16 +19,13 @@ int main(int argc, char **argv)
         pMatrix.push_back(t);
     }
 
-    int pVisibleTrees = 0;
-    for (int i = 0; i < pMatrix.size(); i++)
+    // pVisibleTrees value starts with all the trees on the edge
+    int pVisibleTrees = (2 * pMatrix.size()) + (2 * pMatrix[0].size()) - 4;
+
+    for (int i = 1; i < pMatrix.size() - 1; i++)
     {
-        for (int j = 0; j < pMatrix[0].size(); j++)
+        for (int j = 1; j < pMatrix[0].size() - 1; j++)
         {
-            if (i == 0 || j == 0 || i == pMatrix.size() - 1 || j == pMatrix[0].size() - 1)
-            {
-                pVisibleTrees++;
-                continue;
-            }
             bool pVisible = true;
             for (int k = 0; k < i; k++)
             {
