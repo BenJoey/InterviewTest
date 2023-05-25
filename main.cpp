@@ -85,7 +85,7 @@ int main(int argc, char **argv)
     }
     std::cout << pVisibleTrees << std::endl;
 
-    int mss = 0;
+    int pMaxScenicScore = 0;
     for (int i = 0; i < pMatrix.size(); i++)
     {
         for (int j = 0; j < pMatrix[0].size(); j++)
@@ -94,40 +94,40 @@ int main(int argc, char **argv)
             {
                 continue;
             }
-            int lss1 = 0;
+            int latestScenicScore1 = 0;
             for (int k = i - 1; k >= 0; k--)
             {
-                lss1++;
+                latestScenicScore1++;
                 if (pMatrix[k][j] >= pMatrix[i][j])
                     break;
             }
-            int lss2 = 0;
+            int latestScenicScore2 = 0;
             for (int k = i + 1; k < pMatrix.size(); k++)
             {
-                lss2++;
+                latestScenicScore2++;
                 if (pMatrix[k][j] >= pMatrix[i][j])
                     break;
             }
-            int lss3 = 0;
+            int latestScenicScore3 = 0;
             for (int k = j - 1; k >= 0; k--)
             {
-                lss3++;
+                latestScenicScore3++;
                 if (pMatrix[i][k] >= pMatrix[i][j])
                     break;
             }
-            int lss4 = 0;
+            int latestScenicScore4 = 0;
             for (int k = j + 1; k < pMatrix[0].size(); k++)
             {
-                lss4++;
+                latestScenicScore4++;
                 if (pMatrix[i][k] >= pMatrix[i][j])
                     break;
             }
-            int ss = lss1 * lss2 * lss3 * lss4;
-            if (ss > mss)
-                mss = ss;
+            int currentScenicScore = latestScenicScore1 * latestScenicScore2 * latestScenicScore3 * latestScenicScore4;
+            if (currentScenicScore > pMaxScenicScore)
+                pMaxScenicScore = currentScenicScore;
         }
     }
-    std::cout << mss << std::endl;
+    std::cout << pMaxScenicScore << std::endl;
 
     return 0;
 }
