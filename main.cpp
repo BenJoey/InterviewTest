@@ -85,14 +85,10 @@ int main(int argc, char **argv)
     std::cout << pVisibleTrees << std::endl;
 
     int pMaxScenicScore = 0;
-    for (int i = 0; i < pMatrix.size(); i++)
+    for (int i = 1; i < pMatrix.size() - 1; i++)
     {
-        for (int j = 0; j < pMatrix[0].size(); j++)
+        for (int j = 1; j < pMatrix[0].size() - 1; j++)
         {
-            if (i == 0 || j == 0 || i == pMatrix.size() - 1 || j == pMatrix[0].size() - 1)
-            {
-                continue;
-            }
             int latestScenicScore1 = 0;
             for (int k = i - 1; k >= 0; k--)
             {
