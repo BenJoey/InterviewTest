@@ -55,6 +55,7 @@ int main(int argc, char **argv)
 
     // pVisibleTrees value starts with all the trees on the edge
     int pVisibleTrees = (2 * pMatrix.size()) + (2 * pMatrix[0].size()) - 4;
+    int pMaxScenicScore = 0;
 
     for (int i = 1; i < pMatrix.size() - 1; i++)
     {
@@ -67,15 +68,6 @@ int main(int argc, char **argv)
             {
                 pVisibleTrees++;
             }
-        }
-    }
-    std::cout << pVisibleTrees << std::endl;
-
-    int pMaxScenicScore = 0;
-    for (int i = 1; i < pMatrix.size() - 1; i++)
-    {
-        for (int j = 1; j < pMatrix[0].size() - 1; j++)
-        {
             int currentScenicScore = getScenicScore(pMatrix, i, j, -1, false) *
                                      getScenicScore(pMatrix, i, j, 1, false) *
                                      getScenicScore(pMatrix, i, j, -1, true) *
@@ -83,6 +75,7 @@ int main(int argc, char **argv)
             pMaxScenicScore = std::max(pMaxScenicScore, currentScenicScore);
         }
     }
+    std::cout << pVisibleTrees << std::endl;
     std::cout << pMaxScenicScore << std::endl;
 
     return 0;
