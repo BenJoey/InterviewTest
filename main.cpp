@@ -12,11 +12,12 @@ int main(int argc, char **argv)
     while (std::getline(inputStream, line))
     {
         std::vector<int> t;
+        t.reserve(line.size());
         for (int i = 0; i < line.size(); i++)
         {
-            t.push_back(line[i] - '0');
+            t.emplace_back(line[i] - '0');
         }
-        pMatrix.push_back(t);
+        pMatrix.emplace_back(t);
     }
 
     // pVisibleTrees value starts with all the trees on the edge
