@@ -18,6 +18,25 @@ int getScenicScore(const std::vector<std::vector<int>> &Matrix, int row, int col
     return scenicScore;
 }
 
+bool isTreeVisible(const std::vector<std::vector<int>> &Matrix, int row, int column, int direction, bool isColumn)
+{
+    int starterValue = direction != -1 ? 0 : (Matrix.size() - 1);
+    int iterationCompareValue = isColumn ? column : row;
+    auto conditionFun = [&direction, &iterationCompareValue](const int k)
+    {
+        return direction != -1 ? k < iterationCompareValue : k > iterationCompareValue;
+    };
+    for (int k = starterValue; conditionFun(k); k += direction)
+    {
+        int compareValue = isColumn ? Matrix[row][k] : Matrix[k][column];
+        if (compareValue >= Matrix[row][column])
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
 int main(int argc, char **argv)
 {
     std::ifstream inputStream("day8.in");
@@ -41,59 +60,13 @@ int main(int argc, char **argv)
     {
         for (int j = 1; j < pMatrix[0].size() - 1; j++)
         {
-            bool pVisible = true;
-            for (int k = 0; k < i; k++)
-            {
-                if (pMatrix[k][j] >= pMatrix[i][j])
-                {
-                    pVisible = false;
-                    break;
-                }
-            }
-            if (pVisible)
+            if (isTreeVisible(pMatrix, i, j, -1, true) ||
+                isTreeVisible(pMatrix, i, j, 1, true) ||
+                isTreeVisible(pMatrix, i, j, -1, false) ||
+                isTreeVisible(pMatrix, i, j, 1, false))
             {
                 pVisibleTrees++;
-                continue;
             }
-            pVisible = true;
-            for (int k = pMatrix.size() - 1; k > i; k--)
-            {
-                if (pMatrix[k][j] >= pMatrix[i][j])
-                {
-                    pVisible = false;
-                    break;
-                }
-            }
-            if (pVisible)
-            {
-                pVisibleTrees++;
-                continue;
-            }
-            pVisible = true;
-            for (int k = 0; k < j; k++)
-            {
-                if (pMatrix[i][k] >= pMatrix[i][j])
-                {
-                    pVisible = false;
-                    break;
-                }
-            }
-            if (pVisible)
-            {
-                pVisibleTrees++;
-                continue;
-            }
-            pVisible = true;
-            for (int k = pMatrix[0].size() - 1; k > j; k--)
-            {
-                if (pMatrix[i][k] >= pMatrix[i][j])
-                {
-                    pVisible = false;
-                    break;
-                }
-            }
-            if (pVisible)
-                pVisibleTrees++;
         }
     }
     std::cout << pVisibleTrees << std::endl;
