@@ -5,92 +5,92 @@
 
 int main(int argc, char **argv)
 {
-    std::ifstream inf("day8.in");
-    std::string l;
-    std::vector<std::vector<int>> m;
-    while (std::getline(inf, l))
+    std::ifstream inputStream("day8.in");
+    std::string line;
+    std::vector<std::vector<int>> pMatrix;
+    while (std::getline(inputStream, line))
     {
         std::vector<int> t;
-        for (int i = 0; i < l.size(); i++)
+        for (int i = 0; i < line.size(); i++)
         {
-            t.push_back(l[i] - '0');
+            t.push_back(line[i] - '0');
         }
-        m.push_back(t);
+        pMatrix.push_back(t);
     }
 
-    int vt = 0;
-    for (int i = 0; i < m.size(); i++)
+    int pVisibleTrees = 0;
+    for (int i = 0; i < pMatrix.size(); i++)
     {
-        for (int j = 0; j < m[0].size(); j++)
+        for (int j = 0; j < pMatrix[0].size(); j++)
         {
-            if (i == 0 || j == 0 || i == m.size() - 1 || j == m[0].size() - 1)
+            if (i == 0 || j == 0 || i == pMatrix.size() - 1 || j == pMatrix[0].size() - 1)
             {
-                vt++;
+                pVisibleTrees++;
                 continue;
             }
-            bool v = true;
+            bool pVisible = true;
             for (int k = 0; k < i; k++)
             {
-                if (m[k][j] >= m[i][j])
+                if (pMatrix[k][j] >= pMatrix[i][j])
                 {
-                    v = false;
+                    pVisible = false;
                     break;
                 }
             }
-            if (v)
+            if (pVisible)
             {
-                vt++;
+                pVisibleTrees++;
                 continue;
             }
-            v = true;
-            for (int k = m.size() - 1; k > i; k--)
+            pVisible = true;
+            for (int k = pMatrix.size() - 1; k > i; k--)
             {
-                if (m[k][j] >= m[i][j])
+                if (pMatrix[k][j] >= pMatrix[i][j])
                 {
-                    v = false;
+                    pVisible = false;
                     break;
                 }
             }
-            if (v)
+            if (pVisible)
             {
-                vt++;
+                pVisibleTrees++;
                 continue;
             }
-            v = true;
+            pVisible = true;
             for (int k = 0; k < j; k++)
             {
-                if (m[i][k] >= m[i][j])
+                if (pMatrix[i][k] >= pMatrix[i][j])
                 {
-                    v = false;
+                    pVisible = false;
                     break;
                 }
             }
-            if (v)
+            if (pVisible)
             {
-                vt++;
+                pVisibleTrees++;
                 continue;
             }
-            v = true;
-            for (int k = m[0].size() - 1; k > j; k--)
+            pVisible = true;
+            for (int k = pMatrix[0].size() - 1; k > j; k--)
             {
-                if (m[i][k] >= m[i][j])
+                if (pMatrix[i][k] >= pMatrix[i][j])
                 {
-                    v = false;
+                    pVisible = false;
                     break;
                 }
             }
-            if (v)
-                vt++;
+            if (pVisible)
+                pVisibleTrees++;
         }
     }
-    std::cout << vt << std::endl;
+    std::cout << pVisibleTrees << std::endl;
 
     int mss = 0;
-    for (int i = 0; i < m.size(); i++)
+    for (int i = 0; i < pMatrix.size(); i++)
     {
-        for (int j = 0; j < m[0].size(); j++)
+        for (int j = 0; j < pMatrix[0].size(); j++)
         {
-            if (i == 0 || j == 0 || i == m.size() - 1 || j == m[0].size() - 1)
+            if (i == 0 || j == 0 || i == pMatrix.size() - 1 || j == pMatrix[0].size() - 1)
             {
                 continue;
             }
@@ -98,32 +98,32 @@ int main(int argc, char **argv)
             for (int k = i - 1; k >= 0; k--)
             {
                 lss1++;
-                if (m[k][j] >= m[i][j])
+                if (pMatrix[k][j] >= pMatrix[i][j])
                     break;
             }
             int lss2 = 0;
-            for (int k = i + 1; k < m.size(); k++)
+            for (int k = i + 1; k < pMatrix.size(); k++)
             {
                 lss2++;
-                if (m[k][j] >= m[i][j])
+                if (pMatrix[k][j] >= pMatrix[i][j])
                     break;
             }
             int lss3 = 0;
             for (int k = j - 1; k >= 0; k--)
             {
                 lss3++;
-                if (m[i][k] >= m[i][j])
+                if (pMatrix[i][k] >= pMatrix[i][j])
                     break;
             }
             int lss4 = 0;
-            for (int k = j + 1; k < m[0].size(); k++)
+            for (int k = j + 1; k < pMatrix[0].size(); k++)
             {
                 lss4++;
-                if (m[i][k] >= m[i][j])
+                if (pMatrix[i][k] >= pMatrix[i][j])
                     break;
             }
             int ss = lss1 * lss2 * lss3 * lss4;
-            if(ss > mss)
+            if (ss > mss)
                 mss = ss;
         }
     }
